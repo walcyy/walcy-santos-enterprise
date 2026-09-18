@@ -1,27 +1,30 @@
 .contact-section{padding:104px 0 82px;background:radial-gradient(circle at 82% 12%,rgba(73,215,255,.10),transparent 28%),linear-gradient(145deg,#06101b 0%,#0a1928 100%)}
-.contact-wrap{position:relative;z-index:2}
+.contact-wrap{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:96px;align-items:center}
 .contact-intro{max-width:780px}
 .contact-intro h2{max-width:720px}
 .contact-section p{margin-top:20px;max-width:680px;color:#8ba0b2}
-.contact-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:44px;align-items:stretch}
-.contact-card{position:relative;min-height:196px;padding:22px;border:1px solid rgba(255,255,255,.10);border-radius:18px;background:linear-gradient(155deg,rgba(255,255,255,.055),rgba(255,255,255,.022));box-shadow:inset 0 1px rgba(255,255,255,.035),0 18px 48px rgba(0,0,0,.10);display:flex;flex-direction:column;gap:20px;overflow:hidden;transition:transform .28s ease,border-color .28s ease,background .28s ease,box-shadow .28s ease}
-.contact-card:before{content:'';position:absolute;left:22px;right:22px;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(103,225,255,.72),transparent);opacity:.55}
-.contact-card:after{position:absolute;right:18px;top:17px;color:#5f7386;font-size:9px;letter-spacing:.14em;font-weight:700}
-.contact-card:nth-child(1):after{content:'01'}
-.contact-card:nth-child(2):after{content:'02'}
-.contact-card:nth-child(3):after{content:'03'}
-.contact-card:nth-child(4):after{content:'04'}
-.contact-card:hover{transform:translateY(-5px);border-color:rgba(73,215,255,.30);background:linear-gradient(155deg,rgba(73,215,255,.075),rgba(255,255,255,.025));box-shadow:0 24px 68px rgba(0,0,0,.18),0 0 0 1px rgba(73,215,255,.035) inset}
-.contact-card-head{display:flex;align-items:center;gap:12px;padding-right:28px}
-.contact-card-head strong{font-size:17px;letter-spacing:-.02em;color:#f3f8fc}
-.contact-card-icon{width:44px;height:44px;border-radius:13px;color:#8ce7ff;background:linear-gradient(145deg,rgba(73,215,255,.12),rgba(24,120,255,.045));border:1px solid rgba(73,215,255,.24);box-shadow:0 10px 30px rgba(20,170,220,.08)}
-.contact-card-icon svg{width:20px;height:20px}
-.contact-action-list{display:grid;gap:7px;margin-top:auto}
-.contact-action-list a{min-height:48px;padding:10px 11px;display:grid;grid-template-columns:minmax(0,1fr) 18px;gap:8px;align-items:center;border-radius:11px;border:1px solid rgba(255,255,255,.075);background:rgba(4,12,20,.22);transition:transform .2s ease,border-color .2s ease,background .2s ease}
-.contact-action-list a:hover{transform:translateX(2px);border-color:rgba(73,215,255,.24);background:rgba(73,215,255,.055)}
-.contact-action-list span{min-width:0;color:#dbe9f3;font-size:12px;line-height:1.35;overflow-wrap:anywhere}
-.contact-action-list small{display:none}
-.contact-action-list svg{width:16px;height:16px;color:#9edff2;transition:transform .2s ease}
-.contact-action-list a:hover svg{transform:translate(2px,-2px)}
-@media(max-width:1100px){.contact-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.contact-card{min-height:178px}}
-@media(max-width:680px){.contact-section{padding:80px 0 68px}.contact-cards{grid-template-columns:1fr;gap:10px;margin-top:34px}.contact-card{min-height:auto;padding:19px}.contact-card:before{left:19px;right:19px}.contact-action-list{margin-top:2px}.contact-action-list a{min-height:50px}.contact-card-head strong{font-size:16px}}
+.contact-cards{display:flex;flex-direction:column;gap:16px;margin-top:0;align-items:stretch}
+.contact-card{position:relative;min-height:62px;padding:8px 0;border:0;border-radius:0;background:transparent;box-shadow:none;display:flex;align-items:center;overflow:visible;cursor:pointer;transition:transform .24s ease,filter .24s ease}
+.contact-card:before{display:none}
+.contact-card:after{content:'↗';position:absolute;right:0;top:50%;transform:translateY(-50%);color:#6f879a;font-size:17px;opacity:.72;transition:color .2s ease,opacity .2s ease,transform .2s ease}
+.contact-card:hover{transform:translateX(-8px);background:transparent;border:0;box-shadow:none}
+.contact-card:hover:after{opacity:1;transform:translate(2px,calc(-50% - 2px))}
+.contact-card-head{display:flex;align-items:center;gap:14px;padding-right:34px;pointer-events:none}
+.contact-card-head strong{font-size:16px;letter-spacing:-.02em;color:#f3f8fc;font-weight:700}
+.contact-card-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:50%;border:0;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.28);transition:transform .24s ease,box-shadow .24s ease}
+.contact-card-icon svg{width:20px;height:20px;stroke-width:1.8}
+.contact-card:nth-child(1) .contact-card-icon{background:linear-gradient(135deg,#40c4ff,#0a66c2);box-shadow:0 10px 30px rgba(10,102,194,.22),inset 0 1px 0 rgba(255,255,255,.28)}
+.contact-card:nth-child(2) .contact-card-icon{background:linear-gradient(135deg,#ff6b6b,#ff9f43);box-shadow:0 10px 30px rgba(255,107,107,.20),inset 0 1px 0 rgba(255,255,255,.28)}
+.contact-card:nth-child(3) .contact-card-icon{background:linear-gradient(135deg,#43e97b,#25d366);box-shadow:0 10px 30px rgba(37,211,102,.20),inset 0 1px 0 rgba(255,255,255,.28)}
+.contact-card:nth-child(4) .contact-card-icon{background:linear-gradient(135deg,#f58529,#dd2a7b);box-shadow:0 10px 30px rgba(221,42,123,.20),inset 0 1px 0 rgba(255,255,255,.28)}
+.contact-card:hover .contact-card-icon{transform:scale(1.08)}
+.contact-card:nth-child(1):hover:after{color:#40c4ff}
+.contact-card:nth-child(2):hover:after{color:#ff9f43}
+.contact-card:nth-child(3):hover:after{color:#43e97b}
+.contact-card:nth-child(4):hover:after{color:#dd2a7b}
+.contact-action-list{position:absolute;inset:0;margin:0;z-index:4}
+.contact-action-list a{display:none!important}
+.contact-action-list a:first-child{display:block!important;position:absolute;inset:0;min-height:0;padding:0;border:0;border-radius:0;background:transparent;opacity:0;cursor:pointer}
+.contact-action-list span,.contact-action-list small,.contact-action-list svg{display:none!important}
+@media(max-width:900px){.contact-wrap{grid-template-columns:1fr;gap:42px}.contact-cards{width:min(420px,100%);margin-top:4px}.contact-card:hover{transform:translateX(6px)}}
+@media(max-width:600px){.contact-section{padding:80px 0 68px}.contact-wrap{gap:34px}.contact-cards{gap:12px}.contact-card{min-height:58px}.contact-card-icon{width:44px;height:44px}.contact-card-head strong{font-size:15px}}
