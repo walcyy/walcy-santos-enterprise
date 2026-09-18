@@ -28,3 +28,6 @@
 .contact-action-list span,.contact-action-list small,.contact-action-list svg{display:none!important}
 @media(max-width:900px){.contact-wrap{grid-template-columns:1fr;gap:42px}.contact-cards{width:min(420px,100%);margin-top:4px}.contact-card:hover{transform:translateX(6px)}}
 @media(max-width:600px){.contact-section{padding:80px 0 68px}.contact-wrap{gap:34px}.contact-cards{gap:12px}.contact-card{min-height:58px}.contact-card-icon{width:44px;height:44px}.contact-card-head strong{font-size:15px}}
+
+/* Hero photo should remain clean on every viewport */
+.executive-card-top,.executive-card-bottom{display:none!important}
