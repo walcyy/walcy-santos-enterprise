@@ -1,0 +1,3 @@
+[build]
+  command = "echo 'Prebuilt Walcy Santos portfolio ready'"
+  publish = "dist"
