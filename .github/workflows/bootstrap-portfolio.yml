@@ -1,4 +1,4 @@
-name: Bootstrap Portfolio
+name: Sync Portfolio to Netlify
 
 on:
   push:
@@ -10,33 +10,53 @@ permissions:
   contents: write
 
 jobs:
-  bootstrap:
+  sync:
     runs-on: ubuntu-latest
     if: github.actor != 'github-actions[bot]'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Capture validated portfolio build
+      - name: Capture latest validated portfolio build
+        shell: bash
         run: |
-          set -eu
+          set -euo pipefail
           APP_URL='https://walcy-santos-enterprise-portfolio-jkgvr3.v2.appdeploy.ai/'
-          JS_FILE='index-BwT-a-Mj.js'
-          CSS_FILE='index-D6PbLq2-.css'
+
+          curl -fL "$APP_URL" -o /tmp/portfolio-index.html
+
+          eval "$(python3 - <<'PY'
+          import re
+          from pathlib import Path
+          html = Path('/tmp/portfolio-index.html').read_text(encoding='utf-8')
+          js = re.search(r'(?:\./)?assets/([^\"\']+\.js)', html)
+          css = re.search(r'(?:\./)?assets/([^\"\']+\.css)', html)
+          if not js or not css:
+              raise SystemExit('Unable to detect current Vite asset names')
+          print(f"JS_FILE='{js.group(1)}'")
+          print(f"CSS_FILE='{css.group(1)}'")
+          PY
+          )"
+
+          echo "Detected JS: $JS_FILE"
+          echo "Detected CSS: $CSS_FILE"
+
           rm -rf dist
           mkdir -p dist/assets dist/resources
+
           curl -fL "${APP_URL}assets/${JS_FILE}" -o "dist/assets/${JS_FILE}"
           curl -fL "${APP_URL}assets/${CSS_FILE}" -o "dist/assets/${CSS_FILE}"
           curl -fL "${APP_URL}resources/foto-1.jpeg" -o dist/resources/foto-1.jpeg
           curl -fL "${APP_URL}resources/foto-2.png" -o dist/resources/foto-2.png
+
           cat > dist/index.html <<EOF
           <!doctype html>
           <html lang="pt-BR">
             <head>
               <meta charset="UTF-8" />
               <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-              <meta name="description" content="Portfólio corporativo de Walcy Santos — Software, Cloud, Dados e Infraestrutura." />
-              <title>Walcy Santos — Enterprise Technology Portfolio</title>
+              <meta name="description" content="Portfólio profissional de Walcy Santos — Software, Nuvem, Dados e Infraestrutura." />
+              <title>Walcy Santos — Portfólio de Tecnologia</title>
               <script type="module" crossorigin src="./assets/${JS_FILE}"></script>
               <link rel="stylesheet" crossorigin href="./assets/${CSS_FILE}" />
             </head>
@@ -45,6 +65,7 @@ jobs:
             </body>
           </html>
           EOF
+
           test -s dist/index.html
           test -s "dist/assets/${JS_FILE}"
           test -s "dist/assets/${CSS_FILE}"
@@ -55,14 +76,14 @@ jobs:
         run: |
           cat > netlify.toml <<'EOF'
           [build]
-            command = "echo 'Prebuilt Walcy Santos portfolio ready'"
+            command = "echo 'Portfolio production build ready'"
             publish = "dist"
           EOF
 
-      - name: Commit independent production build
+      - name: Commit refreshed production build
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A
-          git commit -m 'Make portfolio build independent for Netlify' || exit 0
+          git commit -m 'Refresh portfolio production build' || exit 0
           git push origin main
