@@ -21,17 +21,12 @@ jobs:
         run: |
           set -eu
           APP_URL='https://walcy-santos-enterprise-portfolio-jkgvr3.v2.appdeploy.ai/'
+          JS_FILE='index-BwT-a-Mj.js'
+          CSS_FILE='index-D6PbLq2-.css'
           rm -rf dist
           mkdir -p dist/assets dist/resources
-          curl -fsSL "$APP_URL" -o /tmp/appdeploy-index.html
-          JS_URL=$(grep -m1 -oE 'https://[^" ]+/assets/index-[^" ]+\.js' /tmp/appdeploy-index.html)
-          CSS_URL=$(grep -m1 -oE 'https://[^" ]+/assets/index-[^" ]+\.css' /tmp/appdeploy-index.html)
-          test -n "$JS_URL"
-          test -n "$CSS_URL"
-          JS_FILE=$(basename "$JS_URL")
-          CSS_FILE=$(basename "$CSS_URL")
-          curl -fL "$JS_URL" -o "dist/assets/$JS_FILE"
-          curl -fL "$CSS_URL" -o "dist/assets/$CSS_FILE"
+          curl -fL "${APP_URL}assets/${JS_FILE}" -o "dist/assets/${JS_FILE}"
+          curl -fL "${APP_URL}assets/${CSS_FILE}" -o "dist/assets/${CSS_FILE}"
           curl -fL "${APP_URL}resources/foto-1.jpeg" -o dist/resources/foto-1.jpeg
           curl -fL "${APP_URL}resources/foto-2.png" -o dist/resources/foto-2.png
           cat > dist/index.html <<EOF
@@ -42,8 +37,8 @@ jobs:
               <meta name="viewport" content="width=device-width, initial-scale=1.0" />
               <meta name="description" content="Portfólio corporativo de Walcy Santos — Software, Cloud, Dados e Infraestrutura." />
               <title>Walcy Santos — Enterprise Technology Portfolio</title>
-              <script type="module" crossorigin src="./assets/$JS_FILE"></script>
-              <link rel="stylesheet" crossorigin href="./assets/$CSS_FILE" />
+              <script type="module" crossorigin src="./assets/${JS_FILE}"></script>
+              <link rel="stylesheet" crossorigin href="./assets/${CSS_FILE}" />
             </head>
             <body>
               <div id="root"></div>
@@ -51,8 +46,8 @@ jobs:
           </html>
           EOF
           test -s dist/index.html
-          test -s "dist/assets/$JS_FILE"
-          test -s "dist/assets/$CSS_FILE"
+          test -s "dist/assets/${JS_FILE}"
+          test -s "dist/assets/${CSS_FILE}"
           test -s dist/resources/foto-1.jpeg
           test -s dist/resources/foto-2.png
 
