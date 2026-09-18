@@ -1,3 +1,3 @@
 [build]
-  command = "echo 'Prebuilt Walcy Santos portfolio ready'"
+  command = "echo 'Portfolio production build ready'"
   publish = "dist"
