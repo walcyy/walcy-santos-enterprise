@@ -19,13 +19,13 @@ jobs:
 
       - name: Capture validated portfolio build
         run: |
-          set -euo pipefail
+          set -eu
           APP_URL='https://walcy-santos-enterprise-portfolio-jkgvr3.v2.appdeploy.ai/'
           rm -rf dist
           mkdir -p dist/assets dist/resources
           curl -fsSL "$APP_URL" -o /tmp/appdeploy-index.html
-          JS_URL=$(grep -oE 'https://[^" ]+/assets/index-[^" ]+\.js' /tmp/appdeploy-index.html | head -1)
-          CSS_URL=$(grep -oE 'https://[^" ]+/assets/index-[^" ]+\.css' /tmp/appdeploy-index.html | head -1)
+          JS_URL=$(grep -m1 -oE 'https://[^" ]+/assets/index-[^" ]+\.js' /tmp/appdeploy-index.html)
+          CSS_URL=$(grep -m1 -oE 'https://[^" ]+/assets/index-[^" ]+\.css' /tmp/appdeploy-index.html)
           test -n "$JS_URL"
           test -n "$CSS_URL"
           JS_FILE=$(basename "$JS_URL")
