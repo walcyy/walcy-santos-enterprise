@@ -1,3 +1,5 @@
 [build]
   command = "echo 'Portfolio production build ready'"
   publish = "dist"
+
+# Portfolio content refreshed from GitHub main branch.
