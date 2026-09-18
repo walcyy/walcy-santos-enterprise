@@ -16,22 +16,31 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Download portfolio source
+
+      - name: Mirror validated portfolio build
         run: |
-          curl -fL 'https://walcy-portfolio-source-bootstrap-4zcfmq.v2.appdeploy.ai/walcy-source-bootstrap.zip' -o /tmp/walcy-source.zip
-          rm -rf /tmp/walcy-source
-          mkdir -p /tmp/walcy-source
-          unzip -q /tmp/walcy-source.zip -d /tmp/walcy-source
-          rsync -a --delete --exclude='.git/' --exclude='.github/' /tmp/walcy-source/ ./
-      - name: Download portfolio photos
+          rm -rf dist
+          mkdir -p dist
+          wget --quiet --page-requisites --convert-links --no-host-directories --directory-prefix=dist 'https://walcy-santos-enterprise-portfolio-jkgvr3.v2.appdeploy.ai/'
+          mkdir -p dist/resources
+          curl -fL 'https://walcy-santos-enterprise-portfolio-jkgvr3.v2.appdeploy.ai/resources/foto-1.jpeg' -o dist/resources/foto-1.jpeg
+          curl -fL 'https://walcy-santos-enterprise-portfolio-jkgvr3.v2.appdeploy.ai/resources/foto-2.png' -o dist/resources/foto-2.png
+          test -s dist/index.html
+          test -s dist/resources/foto-1.jpeg
+          test -s dist/resources/foto-2.png
+
+      - name: Configure Netlify static publish
         run: |
-          mkdir -p public/resources
-          curl -fL 'https://walcy-santos-enterprise-portfolio-jkgvr3.v2.appdeploy.ai/resources/foto-1.jpeg' -o public/resources/foto-1.jpeg
-          curl -fL 'https://walcy-santos-enterprise-portfolio-jkgvr3.v2.appdeploy.ai/resources/foto-2.png' -o public/resources/foto-2.png
-      - name: Commit portfolio project
+          cat > netlify.toml <<'EOF'
+          [build]
+            command = "echo 'Prebuilt Walcy Santos portfolio ready'"
+            publish = "dist"
+          EOF
+
+      - name: Commit production build
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A
-          git commit -m 'Publish Walcy Santos enterprise portfolio source' || exit 0
+          git commit -m 'Publish Walcy Santos enterprise portfolio build' || exit 0
           git push origin main
