@@ -1,0 +1,205 @@
+/* Portfolio refinements: remove decorative numbering/counters marked for removal */
+.section-index,
+.capability-number,
+.project-index,
+.technology-group > header > small {
+  display: none !important;
+}
+
+/* Native React project controls/list are replaced by the curated portfolio catalogue below. */
+#projetos > .shell > .project-controls,
+#projetos > .shell > .project-list,
+#projetos > .shell > .empty-state {
+  display: none !important;
+}
+
+.portfolio-projects-custom {
+  margin-top: 34px;
+}
+
+.portfolio-projects-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 0 24px;
+  border-bottom: 1px solid rgba(10,24,38,.12);
+}
+
+.portfolio-projects-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.portfolio-project-filter {
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(10,24,38,.12);
+  background: #fff;
+  color: #607182;
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.portfolio-project-filter:hover,
+.portfolio-project-filter.active {
+  background: #0c1a29;
+  color: #fff;
+  border-color: #0c1a29;
+}
+
+.portfolio-project-search {
+  width: min(360px,100%);
+  min-height: 44px;
+  padding: 0 13px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-radius: 12px;
+  border: 1px solid rgba(10,24,38,.12);
+  background: #fff;
+  color: #8395a5;
+}
+
+.portfolio-project-search svg {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+}
+
+.portfolio-project-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #172839;
+  font: inherit;
+}
+
+.portfolio-projects-list {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 13px;
+  padding-top: 22px;
+}
+
+.portfolio-project-card {
+  position: relative;
+  min-height: 255px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  border: 1px solid rgba(8,25,43,.10);
+  background: rgba(255,255,255,.78);
+  box-shadow: 0 18px 55px rgba(14,36,57,.055);
+  overflow: hidden;
+  transition: transform .25s ease,border-color .25s ease,box-shadow .25s ease;
+}
+
+.portfolio-project-card::before {
+  content: "";
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg,transparent,rgba(24,120,255,.48),rgba(73,215,255,.42),transparent);
+  opacity: .7;
+}
+
+.portfolio-project-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(24,120,255,.22);
+  box-shadow: 0 26px 76px rgba(14,36,57,.10);
+}
+
+.portfolio-project-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.portfolio-project-category {
+  color: #197db2;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 750;
+}
+
+.portfolio-project-status {
+  padding: 6px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(10,24,38,.10);
+  background: #f7fafc;
+  color: #5f7283;
+  font-size: 9px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.portfolio-project-card h3 {
+  margin: 24px 0 10px;
+  color: #0c1a29;
+  font-size: 26px;
+  line-height: 1.08;
+  letter-spacing: -.035em;
+  font-weight: 620;
+}
+
+.portfolio-project-card p {
+  margin: 0;
+  color: #66798a;
+  line-height: 1.62;
+  font-size: 14px;
+}
+
+.portfolio-project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.portfolio-project-tags span {
+  padding: 7px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(10,24,38,.09);
+  background: #fff;
+  color: #647586;
+  font-size: 10px;
+}
+
+.portfolio-projects-empty {
+  grid-column: 1 / -1;
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  text-align: center;
+  color: #65798b;
+}
+
+@media (max-width: 850px) {
+  .portfolio-projects-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .portfolio-project-search { width: 100%; }
+  .portfolio-projects-list { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 520px) {
+  .portfolio-projects-custom { margin-top: 26px; }
+  .portfolio-project-card { min-height: 235px;padding: 20px; }
+  .portfolio-project-card::before { left:20px;right:20px; }
+  .portfolio-project-card h3 { font-size: 23px; }
+  .portfolio-project-meta { align-items:flex-start;flex-direction:column;gap:8px; }
+}
